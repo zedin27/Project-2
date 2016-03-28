@@ -1,6 +1,6 @@
 from PIL import Image
 from collections import Counter 
-im = Image.open("/home/michael/Documents/spring16/cst205/project2/spongeBob.jpg")
+im = Image.open("/home/michael/Documents/spring16/cst205/project2/realRainbow.jpg")
 
 #CREATED LISTS TO KEEP TRACK OF THE VALUES OF EACH PIXEL
 redPixelList = []
@@ -62,9 +62,9 @@ for times in range(0,3):
 	del greenPixelList[:]
 	del bluePixelList[:]
 
-	for imgX in range(beginWidth,tileWidth):
-		for imgY in range(beginHeight,tileHeight):
-			finalImg.putpixel((imgX,imgY),(modeRed[0],modeGreen[0],modeBlue[0]))
+#	for imgX in range(beginWidth,tileWidth):
+#		for imgY in range(beginHeight,tileHeight):
+			#finalImg.putpixel((imgX,imgY),(modeRed[0],modeGreen[0],modeBlue[0]))
 
 	if(times < 1):
 		beginHeight += tileHeight
@@ -103,6 +103,7 @@ CODE BELOW IS FOR TESTING PURPOSE, TRYING TO FIND A SOLUTION TO THE BLENDING OF 
 -----------------------------------------------------------------------
 """
 
+
 bw_im = im.convert("1")
 new_im = bw_im.convert("RGB")
 pixels = new_im.getdata()
@@ -114,15 +115,15 @@ for bwX in range(0,height):
 		print r,g,b
 		#print list(im.getdata())
 		
-		if (r == 255 and bwX < (height / 3) ):
+		if (r == 255 and bwX < (height / 3) +1 ):
 			print "First", bwX , bwY
-			finalPixels.append((66,255,255,0))
+			finalPixels.append((firstRedMode,firstGreenMode,firstBlueMode,0))
 		elif(r == 255 and (bwX > height/3) and (bwX < (height/3) *2)):
 			print "second", bwX, bwY
-			finalPixels.append((255,48,17,0))
+			finalPixels.append((secondRedMode,secondGreenMode,secondBlueMode,0))
 		elif(r == 255 and bwX <= height):
 			print "third" , bwX, bwY
-			finalPixels.append((84,50,35,0))
+			finalPixels.append((thirdRedMode,thirdGreenMode,thirdBlueMode,0))
 		else:
 			print "Black"
 			finalPixels.append((0,0,0,0))
@@ -133,38 +134,6 @@ END OF TESTING CODE.
 ----------------------------------------------------------------------
 """
 
-"""
-FIXED THE INFINITE LOOP IT HAD.
-
-------------------------------------------------------------------------
-
-WORKS ALREADY, HOWEVER MUST FIND A WAY TO PLACE THE THE COLOR IMAGE INTO THE BLACK AND WHITE IMAGE
-
-bw_im = im.convert("1")
-new_im = bw_im.convert("RGB")
-pixels = new_im.getdata()
-
-for bwX in range(0,height):
-	for bwY in range(0,width):
-		r,g,b = new_im.getpixel((bwY,bwX))
-		print r,g,b
-		#print list(im.getdata())
-		
-		if (r == 255 and bwX < (height / 3) ):
-			print "First", bwX , bwY
-			finalPixels.append((66,255,255,0))
-		elif(r == 255 and (bwX > height/3) and (bwX < (height/3) *2)):
-			print "second", bwX, bwY
-			finalPixels.append((255,48,17,0))
-		elif(r == 255 and bwX <= height):
-			print "third" , bwX, bwY
-			finalPixels.append((84,50,35,0))
-		else:
-			print "Black"
-			finalPixels.append(0,0,0,0)
-----------------------------------------------------------------------
-
-"""
 finalImg.putdata(finalPixels)
 finalImg.show()			
 print("Image Displayed.")
